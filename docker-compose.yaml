@@ -1,0 +1,31 @@
+version: "3.8"
+
+networks:
+  bluegreen: {}
+
+services:
+
+  router:
+    build: docker/router
+    expose:
+      - 8080
+    ports:
+      - 8080:8080
+    volumes:
+      - ./conf/nginx-dynamic.conf:/etc/nginx/nginx.conf
+    networks:
+      - bluegreen
+  
+  green:
+    build: docker/app
+    expose:
+      - 5000
+    networks:
+      - bluegreen
+
+  blue:
+    build: docker/app
+    expose:
+      - 5000
+    networks:
+      - bluegreen
